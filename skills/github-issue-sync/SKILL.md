@@ -1,6 +1,6 @@
 ---
 name: github-issue-sync
-description: GitHub Issue 全流程管理助手。场景1：通过脚本提交 bug 到 GitHub Issue。场景2：通过脚本提交新需求到 GitHub Issue。场景3：查询打开的 issue 列表。场景4：按 ARCH-DEV-QA-ARCH-PM 工作流修复 issue（必须切换模式执行）。适用于 bug 追踪、issue 查询和规范化 issue 修复流程。
+description: GitHub Issue 全流程管理助手。场景1：通过脚本提交 bug 到 GitHub Issue。场景2：通过脚本提交新需求到 GitHub Issue。场景3：查询打开的 issue 列表。场景4：通过脚本获取单个 issue 内容。场景5：通过脚本为 issue 添加评论。场景6：按 ARCH-DEV-QA-ARCH-PM 工作流修复 issue（必须切换模式执行）。适用于 bug 追踪、issue 查询和规范化 issue 修复流程。
 ---
 
 # GitHub Issue 管理助手
@@ -12,6 +12,8 @@ description: GitHub Issue 全流程管理助手。场景1：通过脚本提交 b
 - 需要**提交 bug** 到 GitHub Issue
 - 需要**提交新需求**到 GitHub Issue
 - 需要**查询**当前打开的 issue 列表（可在当前模式执行）
+- 需要**获取单个 issue 详情**（通过脚本获取完整内容）
+- 需要**为 issue 添加评论**（通过脚本添加评论）
 - 需要按工作流**修复 issue**（必须切换到 agent-architect 模式开始）
 
 ## When NOT to use
@@ -110,14 +112,93 @@ gh issue list --state open
 # 按标签筛选
 gh issue list --label "bug"
 gh issue list --label "enhancement"
-
-# 查看某个 issue 详情
-gh issue view <issue-number>
 ```
 
 ---
 
-### 场景四：处理 Issue（修复 Bug）
+### 场景四：获取单个 Issue 详情
+
+通过脚本获取指定 issue 的完整内容（包括标题、状态、正文、评论等）。
+
+#### 使用脚本查询
+
+```bash
+./scripts/get-issue.sh <issue-number>
+```
+
+**示例：**
+```bash
+# 获取 issue #42 的详情
+./scripts/get-issue.sh 42
+```
+
+**输出内容：**
+- issue 编号、标题、状态（open/closed）
+- 作者、创建时间、更新时间
+- 标签列表
+- 完整正文内容
+- 评论列表
+- issue URL
+
+#### 替代方式：直接使用 gh 命令
+
+```bash
+# 查看 issue 详情（简洁格式）
+gh issue view <issue-number>
+
+# 查看 issue 详情（JSON 格式，包含完整信息）
+gh issue view <issue-number> --json number,title,state,body,author,createdAt,updatedAt,labels,comments,url
+
+# 查看 issue 并包含评论
+gh issue view <issue-number> --comments
+```
+
+---
+
+### 场景五：为 Issue 添加评论
+
+通过脚本为指定 issue 添加评论，用于记录进展、反馈问题等。
+
+#### 使用脚本添加评论
+
+```bash
+./scripts/add-comment.sh <issue-number> "<评论内容>"
+```
+
+**示例：**
+```bash
+# 为 issue #42 添加评论
+./scripts/add-comment.sh 42 "已完成排查，问题根因是..."
+
+# 添加多行评论（使用换行符）
+./scripts/add-comment.sh 42 "## 进展更新
+- [x] 完成初步分析
+- [ ] 实施修复
+- [ ] 测试验证"
+```
+
+#### 替代方式：直接使用 gh 命令
+
+```bash
+# 添加评论
+gh issue comment <issue-number> --body "评论内容"
+
+# 从文件读取评论内容
+echo "评论内容" | gh issue comment <issue-number> --body -
+
+# 添加评论并编辑
+gh issue comment <issue-number> --editor
+```
+
+**常用场景：**
+- 记录排查进展
+- 反馈测试结果
+- 标记工作流阶段完成（如 "ARCH 完成，进入 DEV 阶段"）
+- 回复提问
+
+---
+
+### 场景六：处理 Issue（修复 Bug）
 
 ⚠️ **重要：此场景必须严格按照工作流执行，禁止在当前模式直接修复！**
 
@@ -125,7 +206,7 @@ gh issue view <issue-number>
 
 当用户说"修复 issue"、"处理 bug"、"解决 issue #N"等时：
 
-1. **立即停止当前操作**
+1. **首先获取 issue 详情** - 使用 `./scripts/get-issue.sh <number>` 或 `gh issue view <number>` 获取完整内容
 2. **切换到 ARCH (agent-architect) 模式开始排查**
 3. 使用 `switch_mode` 工具切换到 agent-architect 模式
 
@@ -151,7 +232,8 @@ ARCH → DEV → QA → ARCH → PM → DONE
 **操作：使用 `switch_mode` 切换到 `agent-architect` 模式**
 
 **任务：**
-- 查询 issue 详情和项目本地上下文
+- 获取 issue 详情（标题、描述、评论等）
+- 分析项目本地上下文
 - 排查问题、分析根因
 - 给出修复思路和方案
 - 评估设计合理性和扩展性
@@ -264,6 +346,8 @@ gh issue reopen <number>
 
 - [`scripts/create-bug.sh`](scripts/create-bug.sh) - 创建 bug issue
 - [`scripts/create-feature.sh`](scripts/create-feature.sh) - 创建 feature request issue
+- [`scripts/get-issue.sh`](scripts/get-issue.sh) - 获取单个 issue 详情
+- [`scripts/add-comment.sh`](scripts/add-comment.sh) - 为 issue 添加评论
 
 ## Troubleshooting
 
@@ -336,7 +420,11 @@ gh issue reopen <number>
 用户：修复 issue #1
 
 系统响应：
-检测到用户需要修复 issue。根据工作流规范，我必须先切换到 agent-architect 模式进行排查。
+首先获取 issue #1 的内容：
+
+./scripts/get-issue.sh 1
+
+然后切换到 agent-architect 模式进行排查...
 
 使用 switch_mode 切换到 agent-architect 模式...
 ```
