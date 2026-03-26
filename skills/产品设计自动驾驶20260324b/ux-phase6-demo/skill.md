@@ -77,7 +77,7 @@ metadata:
 
 **2.1 确定需要创建的页面**
 
-从用户旅程的"位置"字段提取唯一页面列表：
+从用户旅程的"位置"字段提取唯一页面列表。案例如下：
 
 | 来源字段 | 示例 | 提取结果 |
 |---------|------|---------|
@@ -88,7 +88,7 @@ metadata:
 
 **2.2 确定页面间的跳转关系**
 
-从用户旅程的"跳转"字段提取：
+从用户旅程的"跳转"字段提取跳转关系，案例如下：
 
 | 跳转类型 | 示例 | 实现方式 |
 |---------|------|---------|
@@ -112,26 +112,94 @@ metadata:
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>流程演示 Demo - 附件上传功能</title>
+    <!-- 引入 Ant Design -->
+    <link rel="stylesheet" href="https://unpkg.com/antd@5.12.8/dist/reset.min.css">
     <style>
-        /* 基础样式 - 功能优先，不关注美观 */
+        /* 星巴克主题配色 + Ant Design 风格 */
+        :root {
+            --starbucks-green: #00704A;
+            --starbucks-green-light: #1e3932;
+            --starbucks-cream: #f1f8f6;
+            --ant-primary: #00704A;
+            --ant-primary-hover: #005938;
+            --ant-border: #d9d9d9;
+            --ant-bg: #ffffff;
+            --ant-text: rgba(0, 0, 0, 0.88);
+            --ant-text-secondary: rgba(0, 0, 0, 0.45);
+        }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: -apple-system, sans-serif; padding: 20px; }
-        .page { display: none; border: 2px solid #333; padding: 20px; margin: 10px 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--starbucks-cream);
+            padding: 24px;
+            color: var(--ant-text);
+            line-height: 1.5;
+        }
+
+        .page { display: none; background: var(--ant-bg); border-radius: 8px; padding: 24px; margin: 16px 0; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 0, 0, 0.08); }
         .page.active { display: block; }
-        .btn { padding: 10px 20px; margin: 5px; cursor: pointer; border: 1px solid #333; }
-        .btn-primary { background: #007bff; color: white; }
-        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-                 background: rgba(0,0,0,0.5); justify-content: center; align-items: center; }
+
+        /* 按钮样式 - Ant Design 风格 */
+        .btn {
+            padding: 8px 16px;
+            margin: 4px;
+            cursor: pointer;
+            border: 1px solid var(--ant-border);
+            background: white;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .btn:hover { border-color: var(--ant-primary); color: var(--ant-primary); }
+        .btn-primary {
+            background: var(--ant-primary);
+            color: white;
+            border-color: var(--ant-primary);
+        }
+        .btn-primary:hover { background: var(--ant-primary-hover); border-color: var(--ant-primary-hover); }
+
+        /* 模态弹窗 */
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.45); justify-content: center; align-items: center; z-index: 1000; }
         .modal.active { display: flex; }
-        .modal-content { background: white; padding: 20px; border-radius: 4px; max-width: 500px; }
-        .breadcrumb { color: #666; margin-bottom: 10px; font-size: 14px; }
-        .section { margin: 15px 0; padding: 10px; border: 1px dashed #999; }
-        .list-item { padding: 10px; border-bottom: 1px solid #eee; cursor: pointer; }
+        .modal-content { background: var(--ant-bg); padding: 24px; border-radius: 8px; max-width: 500px; width: 90%; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12); }
+
+        /* 面包屑 - Ant Design 风格 */
+        .breadcrumb { color: var(--ant-text-secondary); margin-bottom: 16px; font-size: 14px; }
+        .breadcrumb a { color: var(--ant-text-secondary); text-decoration: none; }
+        .breadcrumb a:hover { color: var(--ant-primary); }
+
+        /* 区块样式 */
+        .section { margin: 16px 0; padding: 16px; background: #fafafa; border-radius: 8px; border: 1px solid var(--ant-border); }
+        .section h3 { font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--ant-text); }
+
+        /* 列表项 - Ant Design 风格 */
+        .list-item { padding: 12px 16px; border-bottom: 1px solid #f0f0f0; cursor: pointer; transition: all 0.3s; display: flex; justify-content: space-between; align-items: center; }
         .list-item:hover { background: #f5f5f5; }
-        .badge { display: inline-block; padding: 2px 8px; font-size: 12px; border-radius: 4px; }
-        .badge-pending { background: #ffc107; }
-        .badge-fixed { background: #28a745; color: white; }
-        .file-item { display: flex; justify-content: space-between; padding: 8px; border: 1px solid #ddd; margin: 5px 0; }
+        .list-item:first-child { border-top-left-radius: 8px; border-top-right-radius: 8px; }
+        .list-item:last-child { border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; border-bottom: none; }
+
+        /* 标签徽章 - Ant Design 风格 */
+        .badge { display: inline-block; padding: 2px 8px; font-size: 12px; border-radius: 4px; border: 1px solid transparent; }
+        .badge-pending { background: #fffbe6; border-color: #ffe58f; color: #d48806; }
+        .badge-fixed { background: #f6ffed; border-color: #b7eb8f; color: #389e0d; }
+
+        /* 文件项 */
+        .file-item { display: flex; justify-content: space-between; padding: 12px; border: 1px solid var(--ant-border); margin: 8px 0; border-radius: 6px; background: white; }
+
+        /* Tab 样式 - Ant Design 风格 */
+        .tabs { display: flex; border-bottom: 1px solid var(--ant-border); margin-bottom: 16px; }
+        .tabs .btn { border: none; border-bottom: 2px solid transparent; border-radius: 0; margin-bottom: -1px; }
+        .tabs .btn.active { border-bottom-color: var(--ant-primary); color: var(--ant-primary); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* 输入框 - Ant Design 风格 */
+        input[type="text"] { padding: 8px 12px; border: 1px solid var(--ant-border); border-radius: 6px; font-size: 14px; width: 200px; transition: all 0.3s; }
+        input[type="text"]:focus { border-color: var(--ant-primary); outline: none; box-shadow: 0 0 0 2px rgba(0, 112, 74, 0.1); }
+
+        /* 标题样式 */
+        h2 { font-size: 20px; font-weight: 600; margin-bottom: 16px; color: var(--ant-text); }
     </style>
 </head>
 <body>
@@ -148,9 +216,11 @@ metadata:
 
 ### 步骤 4：实现页面内容
 
-**4.1 发布单列表页**
+根据`### 步骤 2：规划 Demo 结构`收集到的信息，实现页面内容。以列表页和详情页为例
 
-根据用户旅程 Step 1-2 创建：
+**4.1 案例：发布单列表页**
+
+创建：
 
 ```html
 <div id="page-list" class="page active">
@@ -166,11 +236,11 @@ metadata:
     <!-- 发布单列表 -->
     <div id="release-list">
         <div class="list-item" onclick="goToDetail('R-2024-001')">
-            <strong>R-2024-001</strong> - 系统升级发布
+            <span><strong>R-2024-001</strong> - 系统升级发布</span>
             <span class="badge badge-pending">待审核</span>
         </div>
         <div class="list-item" onclick="goToDetail('R-2024-002')">
-            <strong>R-2024-002</strong> - 漏洞修复发布
+            <span><strong>R-2024-002</strong> - 漏洞修复发布</span>
             <span class="badge badge-fixed">已修复</span>
         </div>
         <!-- 根据实际数据添加更多 -->
@@ -178,9 +248,9 @@ metadata:
 </div>
 ```
 
-**4.2 发布单详情页**
+**4.2 案例：发布单详情页**
 
-根据用户旅程 Step 3-9 创建，包含：
+此案例的详情页内容包含：
 - Tab 导航（基本信息、变更内容、安全漏洞情况）
 - 安全漏洞情况 Tab 内的漏洞列表区域
 - 附件上传区域（新增）
@@ -195,13 +265,13 @@ metadata:
 
     <!-- Tab 导航 -->
     <div class="tabs">
-        <button class="btn" onclick="switchTab('tab-basic')">基本信息</button>
-        <button class="btn" onclick="switchTab('tab-change')">变更内容</button>
-        <button class="btn btn-primary" onclick="switchTab('tab-security')">安全漏洞情况</button>
+        <button class="btn" onclick="switchTab('tab-basic', this)">基本信息</button>
+        <button class="btn" onclick="switchTab('tab-change', this)">变更内容</button>
+        <button class="btn btn-primary active" onclick="switchTab('tab-security', this)">安全漏洞情况</button>
     </div>
 
     <!-- 安全漏洞情况 Tab -->
-    <div id="tab-security" class="tab-content">
+    <div id="tab-security" class="tab-content active">
         <!-- 漏洞列表区域 -->
         <div class="section">
             <h3>漏洞列表</h3>
@@ -338,17 +408,17 @@ function executeDelete() {
 在页面顶部添加控制面板，方便测试不同场景：
 
 ```html
-<div id="control-panel" style="background: #f0f0f0; padding: 15px; margin-bottom: 20px; border: 1px solid #ccc;">
-    <h3>场景选择（用于 Demo 测试）</h3>
-    <p>当前 Persona：安全部门审计人员</p>
-    <div>
-        <button class="btn" onclick="resetDemo(); startScenario('upload')">场景1: 上传附件</button>
-        <button class="btn" onclick="resetDemo(); startScenario('download')">场景2: 下载附件</button>
-        <button class="btn" onclick="resetDemo(); startScenario('delete')">场景3: 删除附件</button>
-        <button class="btn" onclick="resetDemo(); startScenario('audit')">场景4: 审计查看</button>
+<div id="control-panel" style="background: #1e3932; padding: 20px; margin-bottom: 24px; border-radius: 8px; color: white;">
+    <h3 style="font-size: 16px; font-weight: 600; margin-bottom: 12px;">场景选择（用于 Demo 测试）</h3>
+    <p style="color: rgba(255,255,255,0.8); margin-bottom: 16px;">当前 Persona：安全部门审计人员</p>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+        <button class="btn" style="background: transparent; color: white; border-color: rgba(255,255,255,0.5);" onclick="resetDemo(); startScenario('upload')">场景1: 上传附件</button>
+        <button class="btn" style="background: transparent; color: white; border-color: rgba(255,255,255,0.5);" onclick="resetDemo(); startScenario('download')">场景2: 下载附件</button>
+        <button class="btn" style="background: transparent; color: white; border-color: rgba(255,255,255,0.5);" onclick="resetDemo(); startScenario('delete')">场景3: 删除附件</button>
+        <button class="btn" style="background: transparent; color: white; border-color: rgba(255,255,255,0.5);" onclick="resetDemo(); startScenario('audit')">场景4: 审计查看</button>
     </div>
-    <p style="margin-top: 10px; font-size: 12px; color: #666;">
-        提示：此面板仅用于 Demo 测试，实际产品中不会显示
+    <p style="margin-top: 16px; font-size: 12px; color: rgba(255,255,255,0.6);">
+        💡 提示：此面板仅用于 Demo 测试，实际产品中不会显示
     </p>
 </div>
 
@@ -395,14 +465,13 @@ function startScenario(scenario) {
 完整的 HTML 文件应包含：
 
 1. **控制面板** - 场景选择按钮，方便测试不同用户旅程
-2. **发布单列表页** - 包含搜索功能
-3. **发布单详情页** - 包含 Tab 切换
-4. **安全漏洞情况 Tab** - 包含漏洞列表、附件上传区、附件列表
-5. **上传弹窗** - 文件选择 + 上传确认
-6. **删除确认弹窗** - 确认/取消按钮
-7. **页面导航逻辑** - JavaScript 控制页面切换
-8. **交互逻辑** - 上传、下载、删除等操作实现
-
+2. **页面数量正确** - 页面数量与`### 步骤 2：规划 Demo 结构`里确定需要创建的页面数量一致。
+3. **页面导航逻辑** - JavaScript 控制页面切换
+4. **交互逻辑** - 上传、下载、删除等操作实现
+5. **易用性检查**：
+    1. **列表页** - 包含搜索功能
+    2. **详情页** - 包含 Tab 切换
+    3. **二次确认** - 删除等操作是否有二次确认弹窗
 ---
 
 ## 示例代码结构
@@ -414,8 +483,66 @@ function startScenario(scenario) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>流程演示 Demo - 发布单附件管理</title>
+    <!-- 引入 Ant Design -->
+    <link rel="stylesheet" href="https://unpkg.com/antd@5.12.8/dist/reset.min.css">
     <style>
-        /* 基础功能样式 - 不关注美观 */
+        /* 星巴克主题配色 + Ant Design 风格 */
+        :root {
+            --starbucks-green: #00704A;
+            --starbucks-green-light: #1e3932;
+            --starbucks-cream: #f1f8f6;
+            --ant-primary: #00704A;
+            --ant-primary-hover: #005938;
+            --ant-border: #d9d9d9;
+            --ant-bg: #ffffff;
+            --ant-text: rgba(0, 0, 0, 0.88);
+            --ant-text-secondary: rgba(0, 0, 0, 0.45);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--starbucks-cream);
+            padding: 24px;
+            color: var(--ant-text);
+            line-height: 1.5;
+        }
+        .page { display: none; background: var(--ant-bg); border-radius: 8px; padding: 24px; margin: 16px 0; box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03), 0 2px 8px rgba(0, 0, 0, 0.08); }
+        .page.active { display: block; }
+        .btn {
+            padding: 8px 16px;
+            margin: 4px;
+            cursor: pointer;
+            border: 1px solid var(--ant-border);
+            background: white;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .btn:hover { border-color: var(--ant-primary); color: var(--ant-primary); }
+        .btn-primary { background: var(--ant-primary); color: white; border-color: var(--ant-primary); }
+        .btn-primary:hover { background: var(--ant-primary-hover); border-color: var(--ant-primary-hover); }
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.45); justify-content: center; align-items: center; z-index: 1000; }
+        .modal.active { display: flex; }
+        .modal-content { background: var(--ant-bg); padding: 24px; border-radius: 8px; max-width: 500px; width: 90%; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12); }
+        .breadcrumb { color: var(--ant-text-secondary); margin-bottom: 16px; font-size: 14px; }
+        .breadcrumb a { color: var(--ant-text-secondary); text-decoration: none; }
+        .breadcrumb a:hover { color: var(--ant-primary); }
+        .section { margin: 16px 0; padding: 16px; background: #fafafa; border-radius: 8px; border: 1px solid var(--ant-border); }
+        .section h3 { font-size: 16px; font-weight: 500; margin-bottom: 12px; color: var(--ant-text); }
+        .list-item { padding: 12px 16px; border-bottom: 1px solid #f0f0f0; cursor: pointer; transition: all 0.3s; display: flex; justify-content: space-between; align-items: center; }
+        .list-item:hover { background: #f5f5f5; }
+        .list-item:first-child { border-top-left-radius: 8px; border-top-right-radius: 8px; }
+        .list-item:last-child { border-bottom-left-radius: 8px; border-bottom-right-radius: 8px; border-bottom: none; }
+        .badge { display: inline-block; padding: 2px 8px; font-size: 12px; border-radius: 4px; border: 1px solid transparent; }
+        .badge-pending { background: #fffbe6; border-color: #ffe58f; color: #d48806; }
+        .badge-fixed { background: #f6ffed; border-color: #b7eb8f; color: #389e0d; }
+        .file-item { display: flex; justify-content: space-between; padding: 12px; border: 1px solid var(--ant-border); margin: 8px 0; border-radius: 6px; background: white; }
+        .tabs { display: flex; border-bottom: 1px solid var(--ant-border); margin-bottom: 16px; }
+        .tabs .btn { border: none; border-bottom: 2px solid transparent; border-radius: 0; margin-bottom: -1px; }
+        .tabs .btn.active { border-bottom-color: var(--ant-primary); color: var(--ant-primary); }
+        input[type="text"] { padding: 8px 12px; border: 1px solid var(--ant-border); border-radius: 6px; font-size: 14px; width: 200px; transition: all 0.3s; }
+        input[type="text"]:focus { border-color: var(--ant-primary); outline: none; box-shadow: 0 0 0 2px rgba(0, 112, 74, 0.1); }
+        h2 { font-size: 20px; font-weight: 600; margin-bottom: 16px; color: var(--ant-text); }
     </style>
 </head>
 <body>
