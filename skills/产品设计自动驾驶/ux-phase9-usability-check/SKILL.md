@@ -241,7 +241,7 @@ metadata:
 > - 不必要：[M] 项
 >
 > **下一步选择：**
-> - **选项 A**：进入 Phase 10 设计 → 运行 `/ux:phase10-design`
+> - **选项 A**：进入 Phase 10 设计 → 运行 `/ux-phase10-design-task-split`
 > - **选项 B**：收集本次对话和文档更新里新增的上下文信息，更新到 context → 运行 `/ux:doc-consistency-check`"
 
 ---

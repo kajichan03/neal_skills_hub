@@ -227,8 +227,8 @@ metadata:
 
 ## 下一阶段
 
-完成 Phase 4 后，进入 [Phase 5 - 用户旅程映射](../ux-phase5-user-journey/SKILL.md)。
-```
+* 完成 Phase 4 后，进入 [Phase 5 - 用户旅程映射](../ux-phase5-user-journey/SKILL.md)。
+* 可选步骤：将 mvp scope 输入 `ux-brd-demo-coach`，生成 demo script。
 
 ---
 
