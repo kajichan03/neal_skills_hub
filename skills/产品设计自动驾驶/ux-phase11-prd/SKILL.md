@@ -1,12 +1,12 @@
 ---
 name: ux-phase11-prd
 description: |
-  以用户为中心设计工作流 Phase 11 - 产品研发需求文档（PRD）生成。
+  以用户为中心设计工作流 PRD 生成 - 产品研发需求文档（PRD）生成。
   整合项目章程中的背景、需求、规则和原型方案，生成面向研发和测试的、结果导向的 PRD 文档。
   不包含调研讨论等过程信息。
   注意：生成的 PRD 文档必须在开头提供目录（Table of Contents）。
 license: MIT
-compatibility: Requires 07-project-goal.md from Phase 7/8/9/10
+compatibility: Requires 07-project-goal.md from 项目章程/规则详细设计/易用性检查/设计
 metadata:
   author: ux-workflow
   version: "1.1"
@@ -25,11 +25,11 @@ metadata:
     - name: 11-prd.md
       description: 面向研发的 PRD 文档，必须包含目录
   triggers:
-    - Phase 10 设计完成后
+    - 设计任务执行 完成后
     - 项目进入研发阶段前
 ---
 
-# Phase 11：产品研发需求文档（PRD）生成
+# PRD 生成：产品研发需求文档（PRD）生成
 
 ## 概述
 
@@ -88,7 +88,7 @@ metadata:
 | 需求来源 | 调研过程、用户访谈记录 | ❌ 移除 |
 | 规则推导 | 逐步分析过程、🔍 标记 | ❌ 移除 |
 | 决策过程 | 为什么选择这个方案 | ❌ 移除 |
-| 讨论记录 | Phase 3 对抗式辩论 | ❌ 移除 |
+| 讨论记录 | 对抗式 Synthesis 对抗式辩论 | ❌ 移除 |
 | **最终背景** | — | ✅ 完整保留 |
 | **最终需求** | — | 完整保留 |
 | **最终规则** | — | 完整保留 |
@@ -311,7 +311,7 @@ PRD 文档开头**必须**包含目录（Table of Contents），包含：
 | 去除内容 | 示例 | 原因 |
 |---------|------|------|
 | 调研过程 | "通过 5 轮用户访谈发现..." | 过程信息 |
-| 讨论记录 | "Phase 3 中 Tim Cook 质疑..." | 过程信息 |
+| 讨论记录 | "对抗式 Synthesis 中 Tim Cook 质疑..." | 过程信息 |
 | 复杂度标记 | "此功能点标记为 🔍" | 过程标记 |
 | 决策理由 | "选择方案 A 而非方案 B 是因为..." | 决策过程 |
 | 逐步推导 | "首先分析...然后得出..." | 推导过程 |
@@ -323,8 +323,8 @@ PRD 文档开头**必须**包含目录（Table of Contents），包含：
 | 项目背景（最终版） | Project Goal 第 2 章 |
 | 目标用户（最终版） | Project Goal 第 1 章 |
 | 需求描述（最终版） | Project Goal 第 3 章 |
-| 功能点规则（完整版） | Project Goal 第 3 章（含 Phase 8 补充）|
-| 原型方案链接 | Project Goal 第 3 章 或 Phase 10 补充 |
+| 功能点规则（完整版） | Project Goal 第 3 章（含 规则详细设计 补充）|
+| 原型方案链接 | Project Goal 第 3 章 或 设计任务拆解 补充 |
 | 成功指标 | Project Goal 第 7 章 |
 
 ---
@@ -337,7 +337,7 @@ PRD 文档开头**必须**包含目录（Table of Contents），包含：
 - 项目背景和目标
 - 角色定义
 - 需求清单和功能点
-- 详细规则（Phase 7 简单规则 + Phase 8 补充规则）
+- 详细规则（项目章程 简单规则 + 规则详细设计 补充规则）
 - 原型方案链接
 
 ### Step 2：提取结果信息
@@ -441,3 +441,15 @@ PRD 文档开头**必须**包含目录（Table of Contents），包含：
 | [`latest/ux-phase7-project-goal/SKILL.md`](latest/ux-phase7-project-goal/SKILL.md) | 项目目标定义 Phase |
 | [`latest/ux-phase10-design/SKILL.md`](latest/ux-phase10-design/SKILL.md) | 设计方案 Phase |
 | [`latest/ux-doc-consistency-check/SKILL.md`](latest/ux-doc-consistency-check/SKILL.md) | 文档一致性检查 |
+
+---
+
+## 下一步
+
+完成此阶段后，建议调用 **ux-flow** skill 来确定下一步：
+
+```bash
+/ux:flow
+```
+
+ux-flow 会根据当前已产出的文件，推荐最合适的下一步阶段。

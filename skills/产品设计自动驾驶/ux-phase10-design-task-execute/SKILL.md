@@ -1,6 +1,6 @@
 ---
 name: ux-phase10-design-task-execute
-description: 以用户为中心设计工作流 Phase 10 - 执行设计任务。循环执行每个设计任务，引导用户使用外部工具生成原型，支持将调整后的内容自动更新回 Project Goal。
+description: 以用户为中心设计工作流 设计任务执行 - 执行设计任务。循环执行每个设计任务，引导用户使用外部工具生成原型，支持将调整后的内容自动更新回 Project Goal。
 license: MIT
 compatibility: Requires 10-design-tasks.md from "拆分设计任务"
 metadata:
@@ -10,7 +10,7 @@ metadata:
   phase: "10"
 ---
 
-启动 Phase 10 - 执行设计任务。
+启动 设计任务执行 - 执行设计任务。
 
 **目标**：循环执行每个设计任务，从上次进度继续，引导用户使用外部工具完成原型设计，并支持将调整后的内容自动更新回 Project Goal。
 
@@ -257,7 +257,7 @@ metadata:
 > - `07-project-goal.md` — 已更新原型链接（如有）
 >
 > **下一步选择**：
-> - **选项 A**：进入 Phase 11 PRD 生成 → 运行 `/ux:phase11-prd`
+> - **选项 A**：进入 PRD 生成 → 运行 `/ux:phase11-prd`
 > - **选项 B**：收集本次对话和文档更新里新增的上下文信息，更新到 context → 运行 `/ux:doc-consistency-check`"
 
 ---
@@ -297,3 +297,15 @@ metadata:
 - **记录产物路径** — 较多调整时记录 Figma 文件和需求文档的本地目录
 - **最终更新 Project Goal** — 较多调整时会自动同步变更到 Project Goal
 - **循环执行** — 直到所有任务完成
+
+---
+
+## 下一步
+
+完成此阶段后，建议调用 **ux-flow** skill 来确定下一步：
+
+```bash
+/ux:flow
+```
+
+ux-flow 会根据当前已产出的文件，推荐最合适的下一步阶段。

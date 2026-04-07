@@ -1,8 +1,8 @@
 ---
 name: ux-phase9-usability-check
-description: 以用户为中心设计工作流 Phase 9 - 可用性检查。在完成所有需求的功能点设计之后，从易用性角度检查 Project Goal 文档里的需求和功能点，产出易用性功能点列表并逐条确认，最终更新到 Project Goal 文档。
+description: 以用户为中心设计工作流 易用性检查 - 可用性检查。在完成所有需求的功能点设计之后，从易用性角度检查 Project Goal 文档里的需求和功能点，产出易用性功能点列表并逐条确认，最终更新到 Project Goal 文档。
 license: MIT
-compatibility: Requires 07-project-goal.md from Phase 7/8
+compatibility: Requires 07-project-goal.md from 项目章程/规则详细设计
 metadata:
   author: ux-workflow
   version: "1.1"
@@ -10,12 +10,12 @@ metadata:
   phase: "9"
 ---
 
-## 启动 Phase 9：可用性检查（Usability Check）
+## 启动 易用性检查：可用性检查（Usability Check）
 
 **目标**：在完成所有需求的功能点设计之后，从易用性角度检查 Project Goal 文档里的需求和功能点，产出易用性功能点列表，逐条与用户确认，最终将必要的易用性优化更新到 Project Goal 文档。
 
 **输入**：
-- `07-project-goal.md`（Phase 7/8 产出的 Project Goal 文档）
+- `07-project-goal.md`（项目章程/规则详细设计 产出的 Project Goal 文档）
 
 **输出**：`09-usability-checklist.md`（易用性功能点列表 + 确认后的规则）
 
@@ -144,7 +144,7 @@ metadata:
 > **重要**：所有输出的 .md 报告文件**必须在开头提供目录（Table of Contents）**，格式如下：
 
 ```markdown
-# Phase 9 - 可用性检查清单
+# 易用性检查 - 可用性检查清单
 
 > 生成时间：[当前日期]
 > 基于 Project Goal: [项目名称]
@@ -227,7 +227,7 @@ metadata:
 
 ## 完成后提示
 
-> "Phase 9 可用性检查完成！
+> "易用性检查 可用性检查完成！
 >
 > 检查覆盖：
 > - 防止误操作：[N] 项
@@ -241,7 +241,7 @@ metadata:
 > - 不必要：[M] 项
 >
 > **下一步选择：**
-> - **选项 A**：进入 Phase 10 设计 → 运行 `/ux-phase10-design-task-split`
+> - **选项 A**：进入 设计任务拆解 → 运行 `/ux-phase10-design-task-split`
 > - **选项 B**：收集本次对话和文档更新里新增的上下文信息，更新到 context → 运行 `/ux:doc-consistency-check`"
 
 ---
@@ -254,3 +254,15 @@ metadata:
 - **不强制推荐** - 不向用户强制推荐任何易用性优化，只客观呈现由用户决定
 - **更新要同步** - 确认后的规则必须同步更新到 Project Goal
 - **必须包含 TOC** - 所有输出的 .md 报告必须在开头提供目录（Table of Contents）
+
+---
+
+## 下一步
+
+完成此阶段后，建议调用 **ux-flow** skill 来确定下一步：
+
+```bash
+/ux:flow
+```
+
+ux-flow 会根据当前已产出的文件，推荐最合适的下一步阶段。

@@ -1,8 +1,8 @@
 ---
 name: ux-phase1-context
-description: 以用户为中心设计工作流 Phase 1 - 上下文补充收集。基于 Phase 0 识别的上下文缺口，有针对性地收集组织背景、技术栈、现有系统和约束条件，为调研和方案设计提供现实基准。
+description: 以用户为中心设计工作流 上下文补充 - 上下文补充收集。基于 问题锚定 识别的上下文缺口，有针对性地收集组织背景、技术栈、现有系统和约束条件，为调研和方案设计提供现实基准。
 license: MIT
-compatibility: Requires 00-quick-anchor.md and 00-context-gaps.md from Phase 0
+compatibility: Requires 00-quick-anchor.md and 00-context-gaps.md from 问题锚定
 metadata:
   author: ux-workflow
   version: "2.1"
@@ -10,22 +10,22 @@ metadata:
   phase: "1"
 ---
 
-# Phase 1：上下文补充收集（Context & Constraints）
+# 上下文补充：上下文补充收集（Context & Constraints）
 
 ## 何时使用
 
-当用户需要基于 Phase 0 识别出的上下文缺口，有针对性地收集组织背景、技术栈、现有系统和约束条件时，使用此技能。
+当用户需要基于 问题锚定 识别出的上下文缺口，有针对性地收集组织背景、技术栈、现有系统和约束条件时，使用此技能。
 
 ## 何时不使用
 
-- 尚未完成 Phase 0 问题锚定（缺少 `00-quick-anchor.md` 或 `00-context-gaps.md`）
+- 尚未完成 问题锚定（缺少 `00-quick-anchor.md` 或 `00-context-gaps.md`）
 - 需要直接进入调研阶段而非先补充上下文
 - 用户已明确表示无需补充上下文
 
 ## 输入
 
-- `00-quick-anchor.md`（Phase 0 产出的草稿 Problem Statement）
-- `00-context-gaps.md`（Phase 0 识别的上下文缺口清单）
+- `00-quick-anchor.md`（问题锚定 产出的草稿 Problem Statement）
+- `00-context-gaps.md`（问题锚定 识别的上下文缺口清单）
 - 团队提供的描述，或已有的现状文档
 
 ## 输出
@@ -220,7 +220,7 @@ metadata:
 **重要**：文件开头必须包含目录（Table of Contents），便于快速导航。
 
 ```markdown
-# Phase 1 - 上下文补充收集
+# 上下文补充 - 上下文补充收集
 
 > 生成时间：[当前日期]
 > 基于 Problem Statement: "[引用草稿 PS]"
@@ -304,15 +304,15 @@ metadata:
 
 ## 完成后提示
 
-> "Phase 1 上下文补充完成！信息已写入 `00-context.md`。
+> "上下文补充 上下文补充完成！信息已写入 `00-context.md`。
 >
 > 已覆盖缺口：[N] 个
 > 待确认项：[N] 个
 >
-> ⚠️ 建议在 Phase 2 调研期间补齐待确认项。
+> 建议在 解决方案研究 调研期间补齐待确认项。
 >
 > **下一步选择**：
-> 继续 Phase 2 并行调研 → 运行 `/ux:phase2-research`"
+> 继续 解决方案研究 并行调研 → 运行 `/ux:phase2-research`"
 
 ---
 
@@ -322,3 +322,15 @@ metadata:
 2. **不确定的必须打标** — 用「待确认」标注，不允许猜测或默认假设
 3. **只记录事实，不做判断** — 不评价技术栈好坏，不提优化建议
 4. **约束是输入，不是障碍** — 不要试图"说服"用户某约束是错的，原样记录
+
+---
+
+## 下一步
+
+完成此阶段后，建议调用 **ux-flow** skill 来确定下一步：
+
+```bash
+/ux:flow
+```
+
+ux-flow 会根据当前已产出的文件，推荐最合适的下一步阶段。

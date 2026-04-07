@@ -1,9 +1,9 @@
 ---
 
 name: ux-phase6-flow-demo
-description: 以用户为中心设计工作流 Phase 6 - 流程演示 Demo 生成。基于用户旅程文档，生成可交互的 HTML 页面，用于验证用户操作流程是否符合预期。
+description: 以用户为中心设计工作流 流程演示 Demo - 流程演示 Demo 生成。基于用户旅程文档，生成可交互的 HTML 页面，用于验证用户操作流程是否符合预期。
 license: MIT
-compatibility: Requires 05-user-journey.md from Phase 5
+compatibility: Requires 05-user-journey.md from 用户旅程设计
 metadata:
   author: ux-workflow
   version: "1.0"
@@ -17,12 +17,13 @@ metadata:
   input_files:
     - 05-user-journey.md (必需)
     - 04-mvp-scope.md (可选)
+    - page-structure-schema.md (推荐)
   output_files:
     - flow-demo.html (可交互的 HTML 页面)
 
 ---
 
-# Phase 6：流程演示 Demo 生成（Flow Demo Generation）
+# 流程演示 Demo：流程演示 Demo 生成（Flow Demo Generation）
 
 ## 阶段目标
 
@@ -42,8 +43,9 @@ metadata:
 
 | 类型 | 文件 | 说明 |
 |------|------|------|
-| **输入 (必需)** | `05-user-journey.md` | Phase 5 产出，包含完整的用户旅程 |
-| **输入 (可选)** | `04-mvp-scope.md` | Phase 4 产出，包含 MVP 功能清单 |
+| **输入 (必需)** | `05-user-journey.md` | 用户旅程设计 产出，包含完整的用户旅程和页面结构图 |
+| **输入 (可选)** | `04-mvp-scope.md` | MVP 划定 产出，包含 MVP 功能清单 |
+| **输入 (推荐)** | `page-structure-schema.md` | 页面结构 Schema 定义 |
 | **输出** | `flow-demo.html` | 可交互的 HTML 原型页面 |
 
 ---
@@ -68,6 +70,16 @@ metadata:
 - MVP 核心目标
 - Must-have 功能列表
 - 成功指标（用于理解验证重点）
+
+**1.3** 读取 `05-user-journey.md` 中的 Part 3：页面结构图
+
+提取：
+- 每个页面的结构图（当前 vs 目标）
+- 页面类型（列表页/表单页/详情页/弹窗等）
+- 页面区域划分和组件层级
+- 新增/修改/删除的区域标注
+
+> 💡 **重要**：Demo 的页面布局和组件结构应严格遵循页面结构图中的定义。
 
 ---
 
@@ -216,7 +228,14 @@ metadata:
 
 ### 步骤 4：实现页面内容
 
-根据`### 步骤 2：规划 Demo 结构`收集到的信息，实现页面内容。以列表页和详情页为例
+根据用户旅程和**页面结构图**实现页面内容。
+
+**实现原则**：
+- 严格按照 `05-user-journey.md` 中 Part 3 的页面结构图进行布局
+- 页面区域、组件层级、位置关系必须与结构图一致
+- 新增/修改的区域必须体现，无变更的区域保持简化
+
+**示例**：列表页和详情页实现
 
 **4.1 案例：发布单列表页**
 
@@ -580,8 +599,10 @@ function startScenario(scenario) {
 | 检查项 | 状态 |
 |--------|------|
 | 已读取 `05-user-journey.md` | [ ] |
+| 已提取 Part 3 页面结构图 | [ ] |
 | 已提取所有 Persona × 场景组合 | [ ] |
-| 已创建所有用户旅程涉及的页面 | [ ] |
+| Demo 页面布局与页面结构图一致 | [ ] |
+| 新增/修改区域在 Demo 中体现 | [ ] |
 | 已实现页面间的跳转逻辑 | [ ] |
 | 已实现弹窗（上传、删除确认） | [ ] |
 | 已实现核心交互（上传、下载、删除） | [ ] |
@@ -595,9 +616,9 @@ function startScenario(scenario) {
 
 | 阶段 | 文件 | 关系 |
 |------|------|------|
-| Phase 5 | [ux-phase5-user-journey](../ux-phase5-user-journey/SKILL.md) | 上一阶段 |
-| Phase 6 | [ux-phase6-demo](./skill.md) | 当前阶段 |
-| Phase 7 | [ux-phase7-project-goal](../ux-phase7-project-goal/SKILL.md) | 下一阶段 |
+| 用户旅程设计 | [ux-phase5-user-journey](../ux-phase5-user-journey/SKILL.md) | 上一阶段 |
+| 流程演示 Demo | [ux-phase6-demo](./skill.md) | 当前阶段 |
+| 项目章程 | [ux-phase7-project-goal](../ux-phase7-project-goal/SKILL.md) | 下一阶段 |
 
 ---
 
@@ -619,3 +640,15 @@ function startScenario(scenario) {
 2. **流程优化** - 根据测试反馈调整用户旅程
 3. **详细设计** - 进入 UI 设计阶段
 4. **技术评审** - 与开发团队评审 Demo 的技术可行性
+
+---
+
+## 下一步
+
+完成此阶段后，建议调用 **ux-flow** skill 来确定下一步：
+
+```bash
+/ux:flow
+```
+
+ux-flow 会根据当前已产出的文件，推荐最合适的下一步阶段。

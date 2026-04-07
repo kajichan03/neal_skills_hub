@@ -1,9 +1,9 @@
 ---
 
 name: ux-phase4-mvp
-description: 以用户为中心设计工作流 Phase 4 - 最窄切入点 (Narrowest Wedge)。基于 Synthesis 仲裁结论，聚焦真正重要的功能，而不是因为资源限制强行删减。
+description: 以用户为中心设计工作流 MVP 划定 - 最窄切入点 (Narrowest Wedge)。基于 Synthesis 仲裁结论，聚焦真正重要的功能，而不是因为资源限制强行删减。
 license: MIT
-compatibility: Requires 03-synthesis.md from Phase 3
+compatibility: Requires 03-synthesis.md from 对抗式 Synthesis
 metadata:
   author: ux-workflow
   version: "1.2"
@@ -21,11 +21,11 @@ metadata:
 
 ---
 
-# Phase 4：最窄切入点 (Narrowest Wedge) 确定
+# MVP 划定：最窄切入点 (Narrowest Wedge) 确定
 
 ## 阶段目标
 
-基于 [Phase 3 Synthesis](../ux-phase3-synthesis/SKILL.md) 的仲裁结论，**聚焦真正重要的功能**，找出最小可行且有人愿意立即付费的 MVP。
+基于 [对抗式 Synthesis](../ux-phase3-synthesis/SKILL.md) 的仲裁结论，**聚焦真正重要的功能**，找出最小可行且有人愿意立即付费的 MVP。
 
 ## 核心原则
 
@@ -37,8 +37,8 @@ metadata:
 
 | 类型 | 文件 | 说明 |
 |------|------|------|
-| **输入 (必需)** | `03-synthesis.md` | Phase 3 产出，包含仲裁结论和核心发现 |
-| **输入 (可选)** | `00-context.md` | Phase 0 产出，包含资源和约束信息 |
+| **输入 (必需)** | `03-synthesis.md` | 对抗式 Synthesis 产出，包含仲裁结论和核心发现 |
+| **输入 (可选)** | `00-context.md` | 问题锚定 产出，包含资源和约束信息 |
 | **输出** | `04-mvp-scope.md` | MVP 范围定义：Must-have + Out of Scope + 成功指标 |
 
 ---
@@ -73,7 +73,7 @@ metadata:
 
 使用 AskUserQuestion tool 向用户询问：
 
-> "Phase 0 的现状信息不存在，我需要了解真实约束以便参考裁剪，请告诉我：
+> "问题锚定 的现状信息不存在，我需要了解真实约束以便参考裁剪，请告诉我：
 > 1. 可用工程师人数？
 > 2. 目标上线时间？
 > 3. 有没有技术上'绝对不能动'的东西？"
@@ -147,7 +147,7 @@ metadata:
 > **⚠️ 重要**：生成的报告必须在开头提供目录（Table of Contents），以便于快速导航和阅读。
 
 ```markdown
-# Phase 4 - MVP 功能清单
+# MVP 划定 - MVP 功能清单
 
 > 生成时间：[日期]
 > 基于：03-synthesis.md
@@ -227,7 +227,7 @@ metadata:
 
 ## 下一阶段
 
-* 完成 Phase 4 后，进入 [Phase 5 - 用户旅程映射](../ux-phase5-user-journey/SKILL.md)。
+* 完成 MVP 划定 后，进入 [用户旅程设计 - 用户旅程映射](../ux-phase5-user-journey/SKILL.md)。
 * 可选步骤：将 mvp scope 输入 `ux-brd-demo-coach`，生成 demo script。
 
 ---
@@ -253,5 +253,17 @@ metadata:
 
 | 阶段 | 文件 | 关系 |
 |------|------|------|
-| Phase 3 | [ux-phase3-synthesis](../ux-phase3-synthesis/SKILL.md) | 输入来源 |
-| Phase 5 | [ux-phase5-user-journey](../ux-phase5-user-journey/SKILL.md) | 下一阶段 |
+| 对抗式 Synthesis | [ux-phase3-synthesis](../ux-phase3-synthesis/SKILL.md) | 输入来源 |
+| 用户旅程设计 | [ux-phase5-user-journey](../ux-phase5-user-journey/SKILL.md) | 下一阶段 |
+
+---
+
+## 下一步
+
+完成此阶段后，建议调用 **ux-flow** skill 来确定下一步：
+
+```bash
+/ux:flow
+```
+
+ux-flow 会根据当前已产出的文件，推荐最合适的下一步阶段。

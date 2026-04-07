@@ -1,8 +1,8 @@
 ---
 name: ux-phase2-research
-description: 以用户为中心设计工作流 Phase 2 - 解决方案研究。基于 Phase 0 锚定的问题，编写用户故事并调研业界解决方案，为 Phase 3 对抗式 Synthesis 提供输入。
+description: 以用户为中心设计工作流 解决方案研究 - 解决方案研究。基于 问题锚定 锚定的问题，编写用户故事并调研业界解决方案，为 对抗式 Synthesis 提供输入。
 license: MIT
-compatibility: Requires 00-quick-anchor.md (required), 00-context-gaps.md (optional), and 00-context.md (optional) from Phase 0-1
+compatibility: Requires 00-quick-anchor.md (required), 00-context-gaps.md (optional), and 00-context.md (optional) from 问题锚定-上下文补充
 metadata:
   author: ux-workflow
   version: "2.1"
@@ -13,7 +13,7 @@ metadata:
 # When to use
 
 在以下情况使用此 skill：
-- 已完成 Phase 0 问题锚定，拥有 `00-quick-anchor.md`
+- 已完成 问题锚定，拥有 `00-quick-anchor.md`
 - 需要将模糊的问题转化为具体的用户故事
 - 需要调研业界现有解决方案作为参考
 
@@ -31,8 +31,8 @@ metadata:
 **目标**：基于已锚定的问题和补充的上下文，编写用户故事并调研业界现有解决方案，为后续 Synthesis 提供完整输入。
 
 **输入**：
-- `00-quick-anchor.md`（Phase 0 产出的草稿 Problem Statement + 争议点）
-- `00-context.md`（Phase 1 补充的上下文，如已执行）
+- `00-quick-anchor.md`（问题锚定 产出的草稿 Problem Statement + 争议点）
+- `00-context.md`（上下文补充 补充的上下文，如已执行）
 
 **输出**：`02-solution-research.md`（用户故事 + 业界解决方案调研）
 
@@ -53,7 +53,7 @@ metadata:
 
 ## 执行策略：两条工作流串行执行
 
-Phase 2 包含两条工作流，**按顺序执行**：
+解决方案研究 包含两条工作流，**按顺序执行**：
 
 1. **Workstream 1：编写用户故事** - 基于问题和背景，描述如何解决问题
 2. **Workstream 2：调研业界解决方案** - 调研业界现有的解决方式
@@ -82,7 +82,7 @@ Phase 2 包含两条工作流，**按顺序执行**：
 
 **按 1→2→3 的顺序思考和编写**：
 
-1. **先定义角色（Who）** - 基于 Phase 0 识别的用户类型
+1. **先定义角色（Who）** - 基于 问题锚定 识别的用户类型
 2. **再明确价值（Value）** - 解决什么痛点，带来什么收益
 3. **最后设计活动（What）** - 具体的功能或流程
 
@@ -93,7 +93,7 @@ Phase 2 包含两条工作流，**按顺序执行**：
 > "基于我们锚定的问题：'[引用 PS]'
 >
 > 让我们来编写用户故事：
-> 1. **角色**：谁是这个功能的主要使用者？（参考 Phase 0 识别的用户类型）
+> 1. **角色**：谁是这个功能的主要使用者？（参考 问题锚定 识别的用户类型）
 > 2. **价值**：解决这个问题能给他们带来什么具体收益？
 > 3. **活动**：他们需要完成什么具体动作来实现这个价值？"
 
@@ -153,7 +153,7 @@ Phase 2 包含两条工作流，**按顺序执行**：
 将两条工作流的结果合并写入 `02-solution-research.md`：
 
 ```markdown
-# Phase 2 - 解决方案研究
+# 解决方案研究 - 解决方案研究
 
 > 生成时间：[当前日期]
 > 基于 Problem Statement: "[引用草稿 PS]"
@@ -170,7 +170,7 @@ Phase 2 包含两条工作流，**按顺序执行**：
   - [方案 B：xxx](#方案-bxxx)
   - [方案 C：用户的"笨办法"](#方案-c用户的笨办法)
 - [3. 方案对比总结](#3-方案对比总结)
-- [4. 进入 Phase 3 的准备检查](#4-进入-phase-3-的准备检查)
+- [4. 进入 对抗式 Synthesis 的准备检查](#4-进入-对抗式-synthesis-的准备检查)
 
 ---
 
@@ -258,7 +258,7 @@ Phase 2 包含两条工作流，**按顺序执行**：
 
 ---
 
-## 4. 进入 Phase 3 的准备检查
+## 4. 进入 对抗式 Synthesis 的准备检查
 
 - [ ] 用户故事已清晰定义（Who + What + Value）
 - [ ] 业界解决方案调研完整（开源 + 商业 + 笨办法）
@@ -268,19 +268,19 @@ Phase 2 包含两条工作流，**按顺序执行**：
 
 ## 完成后提示
 
-> "Phase 2 解决方案研究完成！用户故事和业界方案调研已写入 `02-solution-research.md`。
+> "解决方案研究 解决方案研究完成！用户故事和业界方案调研已写入 `02-solution-research.md`。
 >
 > 调研覆盖：
 > - 用户故事：[N] 个
 > - 业界解决方案：[N] 个（开源/商业/笨办法）
 >
 > **下一步选择：**
-> - **选项 A**：进入 Phase 3 多 Agent 对抗式 Synthesis → 运行 `/ux:phase3-synthesis`
+> - **选项 A**：进入 对抗式 Synthesis 多 Agent 对抗式 Synthesis → 运行 `/ux:phase3-synthesis`
 > - **选项 B**：收集本次对话和文档更新里新增的上下文信息，更新到 context → 运行 `/ux:doc-consistency-check`
 >
 > 需要将以下文件准备好：
 > - `00-quick-anchor.md` ✅
-> - `00-context.md` ✅/❌（如已执行 Phase 1）
+> - `00-context.md` ✅/❌（如已执行 上下文补充）
 > - `02-solution-research.md` ✅"
 
 ## 护栏
@@ -290,4 +290,16 @@ Phase 2 包含两条工作流，**按顺序执行**：
 - **方案调研要具体** - 活动部分必须有流程描述和参考链接
 - **笨办法是竞品** - 必须包含用户现有土办法的分析
 - **支持多方案并行** - 一个问题可以有多个用户故事和多个业界方案
-- **打待验证标记** - 不确定的信息标注清楚，留给 Phase 3 讨论
+- **打待验证标记** - 不确定的信息标注清楚，留给 对抗式 Synthesis 讨论
+
+---
+
+## 下一步
+
+完成此阶段后，建议调用 **ux-flow** skill 来确定下一步：
+
+```bash
+/ux:flow
+```
+
+ux-flow 会根据当前已产出的文件，推荐最合适的下一步阶段。
