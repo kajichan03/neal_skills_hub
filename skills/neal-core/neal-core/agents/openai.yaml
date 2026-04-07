@@ -1,0 +1,7 @@
+interface:
+  display_name: "Neal Core"
+  short_description: "把中文想法写得更短、更顺、更真、更像人话"
+  default_prompt: "用 $neal-core 帮我把这段中文改得更顺，别变油，也别变官话。"
+
+policy:
+  allow_implicit_invocation: true
